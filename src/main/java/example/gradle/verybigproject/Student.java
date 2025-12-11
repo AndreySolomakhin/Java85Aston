@@ -1,4 +1,4 @@
-package example.gradle.bigproject;
+package example.gradle.verybigproject;
 
 import java.util.ArrayList;
 import java.util.List;
