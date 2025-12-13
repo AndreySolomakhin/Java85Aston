@@ -1,12 +1,12 @@
 package example.gradle.bigproject;
 
-import example.gradle.bigproject.ui.ChooseHandler;
+import example.gradle.bigproject.ui.UserInterface;
 
 public class Main {
     public static void main(String[] args){
 
-        while (ChooseHandler.isWork){
-            ChooseHandler.handleChoose(ChooseHandler.getChoose());
+        while (UserInterface.isWork){
+            UserInterface.handleChoose(UserInterface.getChoose());
         }
 
     }
