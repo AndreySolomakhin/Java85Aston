@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args){
 
         while (UserInterface.isWork){
-            UserInterface.handleChoose(UserInterface.getChoose());
+            UserInterface.handleChooseStarWindow(UserInterface.helloWindow());
         }
 
     }

@@ -1,6 +1,7 @@
 package example.gradle.bigproject.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public final class Student {
@@ -9,6 +10,12 @@ public final class Student {
     private final int gpa;
     private final int recordBookNumber;
     public static List<Student> studentList = new ArrayList<>();
+
+    public static final Comparator<Student> BY_RECORD_BOOK = Comparator.comparingInt(Student::getRecordBookNumber);
+
+    public static final Comparator<Student> BY_GPA = Comparator.comparingDouble(Student::getGpa);
+
+    public static final Comparator<Student> BY_STUDENT_NAME = Comparator.comparing(Student::getStudentName);
 
     public Student(StudentBuilder b) {
         this.studentName = b.studentName;
