@@ -1,4 +1,4 @@
-package example.gradle.bigproject.handlerresponse.strategy;
+package example.gradle.bigproject.handlers.strategy;
 
 public interface ResponseStrategy {
     public void handleResponse();

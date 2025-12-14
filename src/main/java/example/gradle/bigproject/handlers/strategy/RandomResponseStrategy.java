@@ -1,4 +1,4 @@
-package example.gradle.bigproject.handlerresponse.strategy;
+package example.gradle.bigproject.handlers.strategy;
 
 public class RandomResponseStrategy implements ResponseStrategy{
     @Override

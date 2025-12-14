@@ -1,6 +1,6 @@
-package example.gradle.bigproject.handlerresponse;
+package example.gradle.bigproject.handlers;
 
-import example.gradle.bigproject.handlerresponse.strategy.ExitResponseStrategy;
+import example.gradle.bigproject.handlers.strategy.ExitResponseStrategy;
 
 public class ExitHandler extends Handler{
     public ExitHandler() {

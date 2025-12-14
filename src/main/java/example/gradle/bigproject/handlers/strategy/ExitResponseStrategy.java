@@ -1,4 +1,4 @@
-package example.gradle.bigproject.handlerresponse.strategy;
+package example.gradle.bigproject.handlers.strategy;
 
 import example.gradle.bigproject.ui.UserInterface;
 

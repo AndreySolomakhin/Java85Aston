@@ -1,4 +1,4 @@
-package example.gradle.main;
+package example.gradle.bigproject;
 
 import example.gradle.bigproject.ui.UserInterface;
 
