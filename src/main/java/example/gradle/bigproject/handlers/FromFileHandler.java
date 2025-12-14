@@ -1,6 +1,6 @@
-package example.gradle.bigproject.handlerresponse;
+package example.gradle.bigproject.handlers;
 
-import example.gradle.bigproject.handlerresponse.strategy.FromFileResponseStrategy;
+import example.gradle.bigproject.handlers.strategy.FromFileResponseStrategy;
 
 public class FromFileHandler extends Handler{
     public FromFileHandler() {

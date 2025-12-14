@@ -1,6 +1,6 @@
-package example.gradle.bigproject.handlerresponse;
+package example.gradle.bigproject.handlers;
 
-import example.gradle.bigproject.handlerresponse.strategy.ManuallyResponseStrategy;
+import example.gradle.bigproject.handlers.strategy.ManuallyResponseStrategy;
 
 public class ManuallyHandler extends Handler{
     public ManuallyHandler() {

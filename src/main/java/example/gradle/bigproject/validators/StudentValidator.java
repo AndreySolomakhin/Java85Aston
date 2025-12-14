@@ -1,4 +1,4 @@
-package example.gradle.bigproject.Validators;
+package example.gradle.bigproject.validators;
 import example.gradle.bigproject.model.Student;
 
 public class StudentValidator {

@@ -1,6 +1,6 @@
-package example.gradle.bigproject.handlerresponse;
+package example.gradle.bigproject.handlers;
 
-import example.gradle.bigproject.handlerresponse.strategy.RandomResponseStrategy;
+import example.gradle.bigproject.handlers.strategy.RandomResponseStrategy;
 
 public class RandomHandler extends Handler{
     public RandomHandler() {

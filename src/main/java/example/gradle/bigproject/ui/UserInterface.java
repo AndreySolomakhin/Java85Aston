@@ -1,6 +1,6 @@
 package example.gradle.bigproject.ui;
 
-import example.gradle.bigproject.handlerresponse.*;
+import example.gradle.bigproject.handlers.*;
 
 import javax.swing.*;
 
