@@ -1,6 +1,9 @@
 package example.gradle.bigproject.ui;
 
 import example.gradle.bigproject.handlers.*;
+import example.gradle.bigproject.model.Student;
+import sorting.collection.EvenRecordBookSorter;
+import sorting.collection.StudentSorter;
 
 import javax.swing.*;
 
@@ -49,7 +52,7 @@ public class UserInterface {
             case 0 ->
                     handleChooseLoadWindow(loadWindow());                                        //Заполнить список студентов
             case 1 ->
-                    System.out.println("Здесь сортировка списка");                               //Произвести сортировку списка
+                    sortCollection();                                                            //Произвести сортировку списка
             case 2 ->
                     System.out.println("Здесь выгрузка в файл");                                 //Выгрузить список студентов в файл",
             case 3 ->
@@ -71,6 +74,22 @@ public class UserInterface {
     }
 
     private static void sortCollection() {
+        if (Student.studentList.isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Список студентов пуст. Сначала заполните его.",
+                    "Ошибка",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        StudentSorter sorter = new EvenRecordBookSorter();
+        sorter.sort(Student.studentList);
+
+        JOptionPane.showMessageDialog(null,
+                "Сортировка выполнена.\n" +
+                        "Студенты с чётным номером зачетки отсортированы по возрастанию.",
+                "Успех",
+                JOptionPane.INFORMATION_MESSAGE);
 
     }
 
