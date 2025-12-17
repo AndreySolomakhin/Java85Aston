@@ -1,15 +1,14 @@
 package example.gradle.bigproject.ui;
 
-
 import example.gradle.bigproject.handlers.*;
 import example.gradle.bigproject.model.Student;
-import example.gradle.bigproject.collection.CustomArrayList;
+import sorting.collection.EvenRecordBookSorter;
+import sorting.collection.StudentSorter;
 
 import javax.swing.*;
 
 public class UserInterface {
 
-    // Главное меню
     private static final String[] OPTIONS_START_WINDOW = {
             "Заполнить список студентов",
             "Произвести сортировку списка",
@@ -27,9 +26,6 @@ public class UserInterface {
 
     public static boolean isWork = true;
 
-    /**
-     * Отображает главное окно приветствия
-     */
     public static int helloWindow() {
 
         return JOptionPane.showOptionDialog(null,
@@ -53,27 +49,61 @@ public class UserInterface {
     public static void handleChooseStarWindow(int indexChooseStartWindow) {
         switch (indexChooseStartWindow) {
 
-            case 0 -> handleChooseLoadWindow(loadWindow());                                        //Окно выбора варианта заполнения списка студентов
-            case 1 -> new EvenSortCollection().handleResponse();                                   //Произвести сортировку списка по четным значениям поля (Задание 1)
-            case 2 -> new OutputAllStudentsFile().handleResponse();                                 //Выгрузить список студентов в файл",
-            case 3 -> new CounterStWithJPA().handleResponse();                //Подсчитать количество студентов по среднему баллу",
-            case 4 -> new OutputAllStudentsConsole().handleResponse();        //Показать список всех студентов",
-            case 5 -> new Exit().handleResponse();                                        //Выйти из программы"
+            case 0 ->
+                    handleChooseLoadWindow(loadWindow());                                        //Заполнить список студентов
+            case 1 ->
+                    sortCollection();                                                            //Произвести сортировку списка
+            case 2 ->
+                    System.out.println("Здесь выгрузка в файл");                                 //Выгрузить список студентов в файл",
+            case 3 ->
+                    System.out.println("Здесь подсчет кол-ва студентов по gpa");                 //Подсчитать количество студентов по среднему баллу",
+            case 4 ->
+                    System.out.println("Здесь вывод полного списка студентов в консоль");        //Показать список всех студентов",
+            case 5 -> new ExitHandler().handleResponse();                                        //Выйти из программы"
         }
     }
 
     private static void handleChooseLoadWindow(int indexChooseLoadWindow) {
         switch (indexChooseLoadWindow) {
 
-            case 0 -> new FillManually().handleResponse(); //Ручной ввод
-            case 1 -> new FillFromFile().handleResponse(); //Ввод из файла
-            case 2 -> new FillRandom().handleResponse();   //Случайный набор
-            case 3 -> new Exit().handleResponse();     //Выйти из программы
+            case 0 -> new ManuallyHandler().handleResponse(); //Ручной ввод
+            case 1 -> new FromFileHandler().handleResponse(); //Ввод из файла
+            case 2 -> new RandomHandler().handleResponse();   //Случайный набор
+            case 3 -> new ExitHandler().handleResponse();     //Выйти из программы
         }
     }
-    /**
-     * Вывод всех студентов.
-     * Теперь выводит не только в консоль, но и в красивое окно.
-     */
+
+    private static void sortCollection() {
+        if (Student.studentList.isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Список студентов пуст. Сначала заполните его.",
+                    "Ошибка",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        StudentSorter sorter = new EvenRecordBookSorter();
+        sorter.sort(Student.studentList);
+
+        JOptionPane.showMessageDialog(null,
+                "Сортировка выполнена.\n" +
+                        "Студенты с чётным номером зачетки отсортированы по возрастанию.",
+                "Успех",
+                JOptionPane.INFORMATION_MESSAGE);
+
+    }
+
+    private static void unloadingToFile() {
+
+    }
+
+    private static void getCountByGpa() {
+
+    }
+
+    private static void getAllStudents() {
+
+    }
+
 
 }
