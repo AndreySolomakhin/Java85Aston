@@ -3,11 +3,12 @@ package example.gradle.bigproject.model;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 public final class Student {
 
     private final String studentName;
-    private final int gpa;
+    private final double gpa;
     private final int recordBookNumber;
     public static List<Student> studentList = new ArrayList<>();
 
@@ -35,6 +36,28 @@ public final class Student {
         return recordBookNumber;
     }
 
+    //наверное надо добавить статич метод для созд Builder
+    //это для создания студентов через Student.builder()..build()
+
+    public static StudentBuilder builder(){
+        return new StudentBuilder();
+    }
+    //методы equals и  hashCode
+    //зачем? дя сравнения объйтков в коллекциях
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return recordBookNumber == student.recordBookNumber &&
+                Double.compare(student.gpa, gpa) == 0 &&
+                Objects.equals(studentName, student.studentName);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentName, gpa, recordBookNumber);
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -45,12 +68,12 @@ public final class Student {
     }
 
     public static class StudentBuilder{
-
-            private int gpa;
+            //извините, тут я изменила int на double
+            private double gpa;
             private String studentName;
             private int recordBookNumber;
 
-            public StudentBuilder setGpa(int gpa) {
+            public StudentBuilder setGpa(double gpa) {
                 this.gpa= gpa;
                 return this;
             }
