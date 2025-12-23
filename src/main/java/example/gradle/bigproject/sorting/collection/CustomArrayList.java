@@ -27,7 +27,7 @@ public class CustomArrayList<T> implements Iterable<T> {
         return (T) data[idx]; // То самое приведение типа
     }
 
-    public int git statussize() {
+    public int size() {
         return size;
     }
 
