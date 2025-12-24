@@ -1,14 +1,23 @@
 package example.gradle.bigproject.ui;
 
+
 import example.gradle.bigproject.handlers.*;
+import example.gradle.bigproject.model.Student;
+import example.gradle.bigproject.sorting.collection.CustomArrayList;
+import example.gradle.bigproject.sorting.collection.BubbleSortStrategy;
 import example.gradle.bigproject.model.Student;
 import sorting.collection.EvenRecordBookSorter;
 import sorting.collection.StudentSorter;
 
 import javax.swing.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class UserInterface {
+    // Наша коллекция
+    public static CustomArrayList<Student> currentList = new CustomArrayList<>();
 
+    // Главное меню
     private static final String[] OPTIONS_START_WINDOW = {
             "Заполнить список студентов",
             "Произвести сортировку списка",
@@ -26,6 +35,9 @@ public class UserInterface {
 
     public static boolean isWork = true;
 
+    /**
+     * Отображает главное окно приветствия
+     */
     public static int helloWindow() {
 
         return JOptionPane.showOptionDialog(null,
@@ -93,17 +105,50 @@ public class UserInterface {
 
     }
 
+    /**
+     * Выгрузка текущего списка в текстовый файл
+     */
     private static void unloadingToFile() {
+        if (currentList.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Нечего сохранять. Список пуст.");
+            return;
+        }
 
+        try (FileWriter writer = new FileWriter("output_students.txt", true)) { //В режиме добавления
+            for (Student s : currentList) {
+                writer.write(s.toString() + "\n");
+            }
+            JOptionPane.showMessageDialog(null, "Данные успешно сохранены в файл output_students.txt");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Ошибка при записи в файл: " + e.getMessage(),
+                    "Ошибка",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    private static void getCountByGpa() {
-
-    }
-
+    /**
+     * Вывод всех студентов.
+     * Теперь выводит не только в консоль, но и в красивое окно.
+     */
     private static void getAllStudents() {
+        if (currentList.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Список студентов пуст.");
+            return;
+        }
 
+        StringBuilder sb = new StringBuilder("Список студентов:\n\n");
+        for (Student s : currentList) {
+            sb.append(s.toString()).append("\n");
+            System.out.println(s); // Оставляем вывод в консоль для отладки
+        }
+
+        // Создаем прокручиваемую область для большого списка
+        JTextArea textArea = new JTextArea(sb.toString());
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setPreferredSize(new java.awt.Dimension(400, 300));
+
+        JOptionPane.showMessageDialog(null, scrollPane, "Текущая база студентов", JOptionPane.PLAIN_MESSAGE);
     }
-
-
 }
