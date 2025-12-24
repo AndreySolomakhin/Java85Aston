@@ -5,6 +5,9 @@ import example.gradle.bigproject.handlers.*;
 import example.gradle.bigproject.model.Student;
 import example.gradle.bigproject.sorting.collection.CustomArrayList;
 import example.gradle.bigproject.sorting.collection.BubbleSortStrategy;
+import example.gradle.bigproject.model.Student;
+import sorting.collection.EvenRecordBookSorter;
+import sorting.collection.StudentSorter;
 
 import javax.swing.*;
 import java.io.FileWriter;
