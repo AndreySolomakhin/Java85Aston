@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class FromFileResponseStrategy implements ResponseStrategy {
+public class FillFromFileStrategy implements ResponseStrategy {
 
     @Override
     public void handleResponse() {
@@ -49,7 +49,7 @@ public class FromFileResponseStrategy implements ResponseStrategy {
 
                         // ВАЛИДАЦИЯ
                         if (StudentValidator.validate(student)) {
-                            UserInterface.currentList.add(student);
+                            Student.studentList.add(student);
                             count++;
                         } else {
                             System.out.println(" Студент не прошел валидацию: " + name);

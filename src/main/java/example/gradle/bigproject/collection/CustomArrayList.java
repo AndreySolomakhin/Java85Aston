@@ -1,4 +1,4 @@
-package example.gradle.bigproject.sorting.collection;
+package example.gradle.bigproject.collection;
 
 
 import java.util.Arrays;

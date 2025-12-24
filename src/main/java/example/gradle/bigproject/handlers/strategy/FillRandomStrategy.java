@@ -6,7 +6,7 @@ import example.gradle.bigproject.ui.UserInterface;
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class RandomResponseStrategy implements ResponseStrategy {
+public class FillRandomStrategy implements ResponseStrategy {
 
     @Override
     public void handleResponse() {
@@ -30,7 +30,7 @@ public class RandomResponseStrategy implements ResponseStrategy {
                 })
                 .limit(5) // Создаем ровно 5 объектов
                 .forEach(student -> {
-                    UserInterface.currentList.add(student);
+                    Student.studentList.add(student);
                     System.out.println(" Сгенерирован: " + student);
                 });
 
