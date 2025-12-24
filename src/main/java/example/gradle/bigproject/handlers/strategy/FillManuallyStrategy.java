@@ -5,7 +5,7 @@ import example.gradle.bigproject.ui.UserInterface;
 import example.gradle.bigproject.validators.StudentValidator;
 import java.util.Scanner;
 
-public class ManuallyResponseStrategy implements ResponseStrategy {
+public class FillManuallyStrategy implements ResponseStrategy {
 
     @Override
     public void handleResponse() {
@@ -31,7 +31,7 @@ public class ManuallyResponseStrategy implements ResponseStrategy {
 
             // Проверяем валидатором
             if (StudentValidator.validate(student)) {
-                UserInterface.currentList.add(student);
+                Student.studentList.add(student);
                 System.out.println(" Студент добавлен.");
             } else {
                 System.out.println("⚠ Студент не прошел валидацию.");

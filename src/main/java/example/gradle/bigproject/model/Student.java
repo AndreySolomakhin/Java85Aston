@@ -1,9 +1,12 @@
 package example.gradle.bigproject.model;
 
 
+import example.gradle.bigproject.collection.CustomArrayList;
+
 import java.util.Comparator;
 
 public final class Student {
+    public static CustomArrayList<Student> studentList = new CustomArrayList<>();
     private final String studentName;
     private final int gpa;
     private final int recordBookNumber;

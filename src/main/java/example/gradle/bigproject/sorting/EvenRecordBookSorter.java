@@ -1,5 +1,6 @@
-package sorting.collection;
+package example.gradle.bigproject.sorting;
 
+import example.gradle.bigproject.collection.CustomArrayList;
 import example.gradle.bigproject.model.Student;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 public class EvenRecordBookSorter implements StudentSorter {
 
     @Override
-    public void sort(List<Student> students) {
+    public void sort(CustomArrayList<Student> students) {
         List<Integer> evenIndexes = new ArrayList<>();
         List<Student> evenStudents = new ArrayList<>();
 

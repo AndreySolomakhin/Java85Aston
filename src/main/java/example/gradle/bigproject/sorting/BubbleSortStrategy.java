@@ -1,5 +1,7 @@
-package example.gradle.bigproject.sorting.collection;
+package example.gradle.bigproject.sorting;
 
+
+import example.gradle.bigproject.collection.CustomArrayList;
 
 import java.util.Comparator;
 
