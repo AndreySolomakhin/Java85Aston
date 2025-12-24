@@ -14,31 +14,28 @@ public class CustomArrayList<T> implements Iterable<T> {
     }
 
     public void add(T item) {
-        if (size == data.length) {
-            data = Arrays.copyOf(data, data.length * 2);
-        }
+        if (size == data.length) data = Arrays.copyOf(data, data.length * 2);
         data[size++] = item;
     }
 
-    public T get(int idx) {
-        if (idx < 0 || idx >= size) {
-            throw new IndexOutOfBoundsException("Index: " + idx);
-        }
-        return (T) data[idx]; // То самое приведение типа
+    public void set(int idx, T item) {
+        if (idx < 0 || idx >= size) throw new IndexOutOfBoundsException();
+        data[idx] = item;
     }
 
-    public int size() {
-        return size;
+    public T get(int idx) {
+        if (idx < 0 || idx >= size) throw new IndexOutOfBoundsException();
+        return (T) data[idx];
     }
+
+    public int size() { return size; }
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<>() { // Используем Diamond Operator <>
+        return new Iterator<>() {
             private int current = 0;
-            @Override
-            public boolean hasNext() { return current < size; }
-            @Override
-            public T next() { return get(current++); }
+            @Override public boolean hasNext() { return current < size; }
+            @Override public T next() { return get(current++); }
         };
     }
 }
