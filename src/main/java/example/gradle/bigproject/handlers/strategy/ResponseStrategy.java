@@ -1,5 +1,7 @@
 package example.gradle.bigproject.handlers.strategy;
 
+
 public interface ResponseStrategy {
-    public void handleResponse();
+    // Этот метод ДОЛЖЕН быть здесь, чтобы @Override работал в других классах
+    void handleResponse();
 }
