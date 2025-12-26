@@ -80,3 +80,4 @@ public class MultithreadedCounter {
         System.out.println("Время выполнения: " + (endTime - startTime) / 1_000_000 + " мс");
     }
 }
+//доб в ком

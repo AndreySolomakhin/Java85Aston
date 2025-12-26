@@ -12,7 +12,7 @@ public class MultithreadedCounterTest {
         com.example.sorting.collection.CustomArrayList<Student>emptyList = new com.example.sorting.collection.CustomArrayList<>();
         Student testStudent = Student.builder()
                 .setStudentName("Test")
-                .setGpa(3.0)
+                .setGpa(39)
                 .setRecordBookNumber(66)
                 .build();
         MultithreadedCounter.countAndPrint(emptyList, testStudent);
@@ -28,13 +28,13 @@ public class MultithreadedCounterTest {
         com.example.sorting.collection.CustomArrayList<Student> multiList = new com.example.sorting.collection.CustomArrayList<>();
         Student student1= Student.builder()
                 .setStudentName("Javisto")
-                .setGpa(4.5)
+                .setGpa(49)
                 .setRecordBookNumber(1234)
                 .build();
 
         Student student2= Student.builder()
                 .setStudentName("Zhargalisto")
-                .setGpa(4.9)
+                .setGpa(42)
                 .setRecordBookNumber(56789)
                 .build();
 
@@ -55,7 +55,7 @@ public class MultithreadedCounterTest {
         com.example.sorting.collection.CustomArrayList<Student> largeList = new com.example.sorting.collection.CustomArrayList<>();
         Student targetStudent = Student.builder()
                 .setStudentName("Target")
-                .setGpa(4.6)
+                .setGpa(36)
                 .setRecordBookNumber(99999)
                 .build();
         for (int i=0; i<1000; i++){
@@ -64,7 +64,7 @@ public class MultithreadedCounterTest {
             }else{
                 largeList.add(Student.builder()
                         .setStudentName("Group" + i)
-                        .setGpa(3.0 + (i % 3))
+                        .setGpa(3 + (i % 3))
                         .setRecordBookNumber(i)
                         .build());
             }

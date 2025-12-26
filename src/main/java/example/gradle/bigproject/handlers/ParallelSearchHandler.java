@@ -37,7 +37,7 @@ public class ParallelSearchHandler extends Handler{
             System.out.println("вот вам пример поиска элемента (которого нет в коллекции)");
             Student nonExistingStudent = Student.builder()
                     .setStudentName("PUPUPUUUU")
-                    .setGpa(5.0)
+                    .setGpa(5)
                     .setRecordBookNumber(99999999)
                     .build();
             MultithreadedCounter.countAndPrint(students, nonExistingStudent);

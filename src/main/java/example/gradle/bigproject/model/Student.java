@@ -50,7 +50,7 @@ public final class Student {
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
         return recordBookNumber == student.recordBookNumber &&
-                Double.compare(student.gpa, gpa) == 0 &&
+                gpa == student.gpa &&
                 Objects.equals(studentName, student.studentName);
     }
     @Override
@@ -68,12 +68,12 @@ public final class Student {
     }
 
     public static class StudentBuilder{
-            //извините, тут я изменила int на double
-            private double gpa;
+
+            private int gpa;
             private String studentName;
             private int recordBookNumber;
 
-            public StudentBuilder setGpa(double gpa) {
+            public StudentBuilder setGpa(int gpa) {
                 this.gpa= gpa;
                 return this;
             }
