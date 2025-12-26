@@ -8,13 +8,13 @@ import java.util.Objects;
 public final class Student {
 
     private final String studentName;
-    private final double gpa;
+    private final int gpa;
     private final int recordBookNumber;
     public static List<Student> studentList = new ArrayList<>();
 
     public static final Comparator<Student> BY_RECORD_BOOK = Comparator.comparingInt(Student::getRecordBookNumber);
 
-    public static final Comparator<Student> BY_GPA = Comparator.comparingDouble(Student::getGpa);
+    public static final Comparator<Student> BY_GPA = Comparator.comparingInt(Student::getGpa);
 
     public static final Comparator<Student> BY_STUDENT_NAME = Comparator.comparing(Student::getStudentName);
 
@@ -28,7 +28,7 @@ public final class Student {
         return studentName;
     }
 
-    public double getGpa() {
+    public int getGpa() {
         return gpa;
     }
 
