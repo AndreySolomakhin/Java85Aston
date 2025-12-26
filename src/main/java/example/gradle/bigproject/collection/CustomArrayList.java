@@ -1,5 +1,4 @@
-package example.gradle.bigproject.sorting.collection;
-
+package example.gradle.bigproject.collection;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -13,6 +12,10 @@ public class CustomArrayList<T> implements Iterable<T> {
         this.size = 0;
     }
 
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     public void add(T item) {
         if (size == data.length) data = Arrays.copyOf(data, data.length * 2);
         data[size++] = item;
@@ -23,6 +26,7 @@ public class CustomArrayList<T> implements Iterable<T> {
         data[idx] = item;
     }
 
+    @SuppressWarnings("unchecked")
     public T get(int idx) {
         if (idx < 0 || idx >= size) throw new IndexOutOfBoundsException();
         return (T) data[idx];
