@@ -27,8 +27,8 @@ public class UserInterface {
      */
     public static int helloWindow() {
         return JOptionPane.showOptionDialog(null,
-                "Добрый день. Что будем делать?",
-                "Добро пожаловать",
+                "Добро пожаловать в систему управления студентами!\nВыберите действие:",
+                "Главное меню",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
                 null, OPTIONS_START_WINDOW, null);
