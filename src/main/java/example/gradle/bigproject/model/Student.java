@@ -3,6 +3,7 @@ package example.gradle.bigproject.model;
 
 import example.gradle.bigproject.collection.CustomArrayList;
 
+import java.util.Objects;
 import java.util.Comparator;
 
 public final class Student {
@@ -16,6 +17,10 @@ public final class Student {
     public static final Comparator<Student> BY_GPA = Comparator.comparingInt(Student::getGpa);
     public static final Comparator<Student> BY_STUDENT_NAME = Comparator.comparing(Student::getStudentName);
 
+      public static StudentBuilder builder() {
+        return new StudentBuilder();
+    }
+
     private Student(StudentBuilder b) {
         this.studentName = b.studentName;
         this.gpa = b.gpa;
@@ -25,6 +30,21 @@ public final class Student {
     public String getStudentName() { return studentName; }
     public int getGpa() { return gpa; }
     public int getRecordBookNumber() { return recordBookNumber; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return gpa == student.gpa &&
+                recordBookNumber == student.recordBookNumber &&
+                Objects.equals(studentName, student.studentName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentName, gpa, recordBookNumber);
+    }
 
     @Override
     public String toString() {
