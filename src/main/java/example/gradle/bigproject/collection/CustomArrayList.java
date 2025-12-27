@@ -26,7 +26,6 @@ public class CustomArrayList<T> implements Iterable<T> {
         data[idx] = item;
     }
 
-    @SuppressWarnings("unchecked")
     public T get(int idx) {
         if (idx < 0 || idx >= size) throw new IndexOutOfBoundsException();
         return (T) data[idx];
