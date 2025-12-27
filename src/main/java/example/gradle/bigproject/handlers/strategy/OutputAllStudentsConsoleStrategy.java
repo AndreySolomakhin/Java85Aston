@@ -1,4 +1,4 @@
 package example.gradle.bigproject.handlers.strategy;
 
-public class EvenSortCollectionStrategy {
+public class OutputAllStudentsConsoleStrategy {
 }
