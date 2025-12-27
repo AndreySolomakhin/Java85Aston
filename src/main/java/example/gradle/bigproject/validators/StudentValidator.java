@@ -3,38 +3,24 @@ package example.gradle.bigproject.validators;
 import example.gradle.bigproject.model.Student;
 
 public class StudentValidator {
-
-    /**
-     * Проверяет объект студента на соответствие всем правилам.
-     * @return true, если данные корректны.
-     */
     public static boolean validate(Student s) {
+        if (s == null) return false;
         String name = s.getStudentName();
-        double gpa = s.getGpa();
+        int gpa = s.getGpa();
         int recordNumber = s.getRecordBookNumber();
 
-        // 1. Проверка имени
-        if (name == null || name.isBlank()) {
-            System.out.println(" Ошибка валидации: имя не может быть пустым.");
+        if (name == null || name.isBlank() || name.matches(".*\\d.*")) {
+            System.out.println(" Ошибка валидации имени: " + name);
             return false;
         }
-        if (name.matches(".*\\d.*")) {
-            System.out.println(" Ошибка валидации: имя '" + name + "' содержит цифры.");
+        if (gpa < 0 || gpa > 100) {
+            System.out.println(" Ошибка: балл " + gpa + " вне [0-100]");
             return false;
         }
-
-        // 2. Проверка балла
-        if (gpa < 0.0 || gpa > 100.0) {
-            System.out.println(" Ошибка валидации: балл " + gpa + " вне диапазона [0-100].");
-            return false;
-        }
-
-        // 3. Проверка зачетки
         if (recordNumber <= 0) {
-            System.out.println(" Ошибка валидации: номер зачетки должен быть > 0.");
+            System.out.println(" Ошибка: номер зачетки " + recordNumber + " некорректен");
             return false;
         }
-
-        return true; // Если все проверки пройдены
+        return true;
     }
 }
