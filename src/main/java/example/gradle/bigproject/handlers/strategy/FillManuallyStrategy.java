@@ -5,43 +5,39 @@ import example.gradle.bigproject.validators.StudentValidator;
 import java.util.Scanner;
 
 public class FillManuallyStrategy implements ResponseStrategy {
-
     @Override
     public void handleResponse() {
-        Scanner scanner = new Scanner(System.in);
-        boolean isAdded = false;
+        Scanner sc = new Scanner(System.in);
+        try {
+            System.out.println("--- Ввод данных студента вручную ---");
 
-        while (!isAdded) {
-            try {
-                System.out.println("\n--- Режим ручного ввода ---");
-                System.out.print("Введите имя: ");
-                String name = scanner.nextLine();
+            System.out.print("Введите имя: ");
+            String name = sc.nextLine();
 
-                System.out.print("Введите средний балл (0-100): ");
+            System.out.print("Введите балл (0-100): ");
+            int gpa = Integer.parseInt(sc.nextLine());
 
-                double gpa = Double.parseDouble(scanner.nextLine());
+            System.out.print("Введите номер зачетки: ");
+            int rec = Integer.parseInt(sc.nextLine());
 
-                System.out.print("Введите номер зачетки: ");
-                int recordNumber = Integer.parseInt(scanner.nextLine());
+            Student s = Student.builder()
+                    .setStudentName(name)
+                    .setGpa(gpa)
+                    .setRecordBookNumber(rec)
+                    .build();
 
 
-                Student student = Student.builder()
-                        .setStudentName(name)
-                        .setGpa(gpa)
-                        .setRecordBookNumber(recordNumber)
-                        .build();
-
-                if (StudentValidator.validate(student)) {
-                    Student.studentList.add(student);
-                    System.out.println(" Студент добавлен успешно.");
-                    isAdded = true;
-                }
-
-            } catch (NumberFormatException e) {
-                System.out.println(" Ошибка: Балл может быть числом (можно с точкой), а зачетка — целым числом.");
-            } catch (Exception e) {
-                System.out.println(" Ошибка: " + e.getMessage());
+            if (StudentValidator.validate(s)) {
+                Student.studentList.add(s);
+                System.out.println(" Студент успешно добавлен в список.");
+            } else {
+                System.out.println(" Студент не прошел валидацию и не был добавлен.");
             }
+
+        } catch (NumberFormatException e) {
+            System.out.println(" Ошибка: балл и номер зачетки должны быть целыми числами!");
+        } catch (Exception e) {
+            System.out.println(" Произошла ошибка при вводе: " + e.getMessage());
         }
     }
 }
