@@ -1,7 +1,6 @@
 package example.gradle.bigproject.handlers.strategy;
 
 import example.gradle.bigproject.model.Student;
-import example.gradle.bigproject.ui.UserInterface;
 import example.gradle.bigproject.validators.StudentValidator;
 import java.io.BufferedReader;
 import java.io.FileReader;
