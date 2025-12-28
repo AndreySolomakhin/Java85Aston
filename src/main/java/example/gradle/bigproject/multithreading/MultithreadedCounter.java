@@ -1,29 +1,30 @@
 package example.gradle.bigproject.multithreading;
 
-import example.gradle.bigproject.collection.CustomArrayList;
 import example.gradle.bigproject.model.Student;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MultithreadedCounter {
 
-    public static <T> int countOccurrences(CustomArrayList<T> list, T element, int threadCount) {
-        if (list == null || element == null || threadCount <= 0) {
-            throw new IllegalArgumentException("Некорректные параметры");
-        }
+    private final int size;
+    private final int threadCount;
+    private final int chunkSize;
+    private final int remainder;
+    private final AtomicInteger totalCount;
+    private final Thread[] threads;
 
-        int size = list.size();
-        if (size == 0) {
-            return 0;
-        }
+    public MultithreadedCounter() {
+        size = Student.studentList.size();
+        threadCount = Runtime.getRuntime().availableProcessors();
+        chunkSize = size / threadCount;
+        remainder = size % threadCount;
+        totalCount = new AtomicInteger(0);
+        threads = new Thread[threadCount];
+    }
 
-        AtomicInteger totalCount = new AtomicInteger(0);
-        Thread[] threads = new Thread[threadCount];
-
-        int chunkSize = size / threadCount;
-        int remainder = size % threadCount;
+    public int countOccurrences(String name) {
 
         int startIndex = 0;
-        for (int i = 0; i < threadCount; i++) {
+        for (int i = 0; i < threads.length; i++) {
             int endIndex = startIndex + chunkSize + (i < remainder ? 1 : 0);
             final int threadStart = startIndex;
             final int threadEnd = Math.min(endIndex, size);
@@ -32,8 +33,8 @@ public class MultithreadedCounter {
             threads[i] = new Thread(() -> {
                 int localCount = 0;
                 for (int j = threadStart; j < threadEnd; j++) {
-                    T current = list.get(j);
-                    if (current != null && current.equals(element)) {
+                    String current = Student.studentList.get(j).getStudentName();
+                    if (current != null && current.equals(name)) {
                         localCount++;
                     }
                 }
@@ -58,39 +59,17 @@ public class MultithreadedCounter {
         return totalCount.get();
     }
 
-    public static <T> void countAndPrint(CustomArrayList<T> list, T element) {
-        int availableProcessors = Runtime.getRuntime().availableProcessors();
-        int threadCount = Math.min(availableProcessors, Math.max(1, list.size() / 1000));
-        threadCount = Math.max(1, threadCount);
-
-        System.out.println("Искомый элемент: " + element);
-        System.out.println("Размер коллекции: " + list.size());
-        System.out.println("Используется потоков: " + threadCount);
+    public void countAndPrint(String name) {
 
         long startTime = System.nanoTime();
-        int count = countOccurrences(list, element, threadCount);
+        int count = countOccurrences(name);
         long endTime = System.nanoTime();
 
         System.out.println("Общее количество вхождений: " + count);
         System.out.println("Время выполнения: " + (endTime - startTime) / 1_000_000 + " мс");
     }
 
-    // по гпа
-    public static int countStudentsByGPA(CustomArrayList<Student> list, int targetGPA, int threadCount) {
-        if (list == null || threadCount <= 0) {
-            throw new IllegalArgumentException("Некорректные параметры");
-        }
-
-        int size = list.size();
-        if (size == 0) {
-            return 0;
-        }
-
-        AtomicInteger totalCount = new AtomicInteger(0);
-        Thread[] threads = new Thread[threadCount];
-
-        int chunkSize = size / threadCount;
-        int remainder = size % threadCount;
+    public int countStudentsByGPA(int targetGPA) {
 
         int startIndex = 0;
         for (int i = 0; i < threadCount; i++) {
@@ -102,7 +81,7 @@ public class MultithreadedCounter {
             threads[i] = new Thread(() -> {
                 int localCount = 0;
                 for (int j = threadStart; j < threadEnd; j++) {
-                    Student student = list.get(j);
+                    Student student = Student.studentList.get(j);
                     if (student != null && student.getGpa() == targetGPA) {
                         localCount++;
                     }
@@ -128,17 +107,13 @@ public class MultithreadedCounter {
         return totalCount.get();
     }
 
-    public static void countAndPrintByGPA(CustomArrayList<Student> list, int targetGPA) {
-        int availableProcessors = Runtime.getRuntime().availableProcessors();
-        int threadCount = Math.min(availableProcessors, Math.max(1, list.size() / 1000));
-        threadCount = Math.max(1, threadCount);
+    public void countAndPrintByGPA(int targetGPA) {
 
         System.out.println("Поиск студентов с GPA = " + targetGPA);
-        System.out.println("Размер коллекции: " + list.size());
-        System.out.println("Используется потоков: " + threadCount);
+        System.out.println("Размер коллекции: " + size);
 
         long startTime = System.nanoTime();
-        int count = countStudentsByGPA(list, targetGPA, threadCount);
+        int count = countStudentsByGPA(targetGPA);
         long endTime = System.nanoTime();
 
         System.out.println("Всего студентов с GPA = " + targetGPA + ": " + count);
@@ -146,33 +121,19 @@ public class MultithreadedCounter {
     }
 
     // по минимальному гпа
-    public static int countStudentsByMinGPA(CustomArrayList<Student> list, int minGPA, int threadCount) {
-        if (list == null || threadCount <= 0) {
-            throw new IllegalArgumentException("Некорректные параметры");
-        }
-
-        int size = list.size();
-        if (size == 0) {
-            return 0;
-        }
-
-        AtomicInteger totalCount = new AtomicInteger(0);
-        Thread[] threads = new Thread[threadCount];
-
-        int chunkSize = size / threadCount;
-        int remainder = size % threadCount;
+    public int countStudentsByMinGPA(int minGPA) {
 
         int startIndex = 0;
         for (int i = 0; i < threadCount; i++) {
             int endIndex = startIndex + chunkSize + (i < remainder ? 1 : 0);
             final int threadStart = startIndex;
-            final int threadEnd = Math.min(endIndex, size);
+            final int threadEnd = Math.min(endIndex, Student.studentList.size());
             final int threadId = i;
 
             threads[i] = new Thread(() -> {
                 int localCount = 0;
                 for (int j = threadStart; j < threadEnd; j++) {
-                    Student student = list.get(j);
+                    Student student = Student.studentList.get(j);
                     if (student != null && student.getGpa() >= minGPA) {
                         localCount++;
                     }
@@ -198,17 +159,13 @@ public class MultithreadedCounter {
         return totalCount.get();
     }
 
-    public static void countAndPrintByMinGPA(CustomArrayList<Student> list, int minGPA) {
-        int availableProcessors = Runtime.getRuntime().availableProcessors();
-        int threadCount = Math.min(availableProcessors, Math.max(1, list.size() / 1000));
-        threadCount = Math.max(1, threadCount);
+    public void countAndPrintByMinGPA(int minGPA) {
 
         System.out.println("Поиск студентов с GPA >= " + minGPA);
-        System.out.println("Размер коллекции: " + list.size());
-        System.out.println("Используется потоков: " + threadCount);
+        System.out.println("Размер коллекции: " + Student.studentList.size());
 
         long startTime = System.nanoTime();
-        int count = countStudentsByMinGPA(list, minGPA, threadCount);
+        int count = countStudentsByMinGPA(minGPA);
         long endTime = System.nanoTime();
 
         System.out.println("Всего студентов с GPA >= " + minGPA + ": " + count);
