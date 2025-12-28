@@ -1,7 +1,7 @@
 package example.gradle.bigproject.validators;
 
+
 import example.gradle.bigproject.model.Student;
-import example.gradle.bigproject.validators.StudentValidator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
