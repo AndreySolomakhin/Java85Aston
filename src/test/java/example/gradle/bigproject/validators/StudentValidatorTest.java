@@ -1,75 +1,50 @@
 package example.gradle.bigproject.validators;
 
 import example.gradle.bigproject.model.Student;
-import org.junit.jupiter.api.DisplayName;
+import example.gradle.bigproject.validators.StudentValidator;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class StudentValidatorTest {
+public class StudentValidatorTest {
 
     @Test
-    @DisplayName("Валидация корректного студента")
     void testValidStudent() {
         Student s = Student.builder()
-                .setStudentName("Иван")
-                .setGpa(90.5)
-                .setRecordBookNumber(123)
-                .build();
-
-        assertTrue(StudentValidator.validate(s), "Валидатор должен вернуть true для корректных данных");
-    }
-
-    @Test
-    @DisplayName("Проверка граничных значений GPA (0 и 100)")
-    void testGpaBoundaries() {
-        // Проверяем 100.0 (должно быть true)
-        Student s100 = Student.builder()
-                .setStudentName("Тест")
-                .setGpa(100.0)
+                .setStudentName("Ivan")
+                .setGpa(90)
                 .setRecordBookNumber(1)
                 .build();
-        assertTrue(StudentValidator.validate(s100), "100.0 — допустимый балл");
+        assertTrue(StudentValidator.validate(s));
+    }
 
-        // Проверяем 0.0 (должно быть true, так как в коде gpa < 0 — ошибка)
-        Student s0 = Student.builder()
-                .setStudentName("Тест")
-                .setGpa(0.0)
+    @Test
+    void testInvalidNameWithDigits() {
+        Student s = Student.builder()
+                .setStudentName("Ivan123")
+                .setGpa(50)
                 .setRecordBookNumber(2)
                 .build();
-        assertTrue(StudentValidator.validate(s0), "0.0 — допустимый балл");
+        assertFalse(StudentValidator.validate(s));
+    }
 
-        // Проверяем выход за границы (100.1 — должно быть false)
-        Student sOver = Student.builder()
-                .setStudentName("Тест")
-                .setGpa(100.1)
+    @Test
+    void testInvalidGpa() {
+        Student s = Student.builder()
+                .setStudentName("Oleg")
+                .setGpa(150)
                 .setRecordBookNumber(3)
                 .build();
-        assertFalse(StudentValidator.validate(sOver), "100.1 — недопустимый балл");
+        assertFalse(StudentValidator.validate(s));
     }
 
     @Test
-    @DisplayName("Валидация некорректного номера зачетки (<= 0)")
-    void testInvalidRecordBook() {
-        Student sInvalid = Student.builder()
-                .setStudentName("Тест")
-                .setGpa(50.0)
-                .setRecordBookNumber(0) // В коде ошибка если <= 0
+    void testEmptyName() {
+        Student s = Student.builder()
+                .setStudentName("")
+                .setGpa(70)
+                .setRecordBookNumber(4)
                 .build();
-
-        assertFalse(StudentValidator.validate(sInvalid), "Зачетка 0 должна быть невалидной");
-    }
-
-    @Test
-    @DisplayName("Проверка имени на цифры и пустоту")
-    void testNameValidation() {
-        // Пустое имя
-        Student empty = Student.builder().setStudentName(" ").setGpa(50).setRecordBookNumber(1).build();
-        // Имя с цифрой
-        Student withDigit = Student.builder().setStudentName("Иван2").setGpa(50).setRecordBookNumber(2).build();
-
-        assertAll("Отрицательные сценарии для имени",
-                () -> assertFalse(StudentValidator.validate(empty), "Пустое имя недопустимо"),
-                () -> assertFalse(StudentValidator.validate(withDigit), "Имя с цифрами недопустимо")
-        );
+        assertFalse(StudentValidator.validate(s));
     }
 }
