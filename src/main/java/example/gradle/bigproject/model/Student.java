@@ -5,6 +5,7 @@ import example.gradle.bigproject.collection.CustomArrayList;
 
 import java.util.Objects;
 import java.util.Comparator;
+import java.util.Objects;
 
 public final class Student {
     public static CustomArrayList<Student> studentList = new CustomArrayList<>();
@@ -12,7 +13,6 @@ public final class Student {
     private final int gpa;
     private final int recordBookNumber;
 
-    // Компараторы для основной сортировки
     public static final Comparator<Student> BY_RECORD_BOOK = Comparator.comparingInt(Student::getRecordBookNumber);
     public static final Comparator<Student> BY_GPA = Comparator.comparingInt(Student::getGpa);
     public static final Comparator<Student> BY_STUDENT_NAME = Comparator.comparing(Student::getStudentName);
@@ -26,6 +26,8 @@ public final class Student {
         this.gpa = b.gpa;
         this.recordBookNumber = b.recordBookNumber;
     }
+
+    public static StudentBuilder builder() { return new StudentBuilder(); }
 
     public String getStudentName() { return studentName; }
     public int getGpa() { return gpa; }
@@ -51,31 +53,26 @@ public final class Student {
         return String.format("Студент: %-15s | Зачетка: %-5d | Балл: %d", studentName, recordBookNumber, gpa);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return gpa == student.gpa && recordBookNumber == student.recordBookNumber &&
+                Objects.equals(studentName, student.studentName);
+    }
+
+    @Override
+    public int hashCode() { return Objects.hash(studentName, gpa, recordBookNumber); }
+
     public static class StudentBuilder {
         private int gpa;
         private String studentName;
         private int recordBookNumber;
 
-        public StudentBuilder setGpa(int gpa) {
-            if (gpa < 0 || gpa > 100) throw new IllegalArgumentException("Балл должен быть 0-100");
-            this.gpa = gpa;
-            return this;
-        }
-
-        public StudentBuilder setStudentName(String studentName) {
-            if (studentName == null || studentName.isBlank()) throw new IllegalArgumentException("Имя пустое");
-            this.studentName = studentName;
-            return this;
-        }
-
-        public StudentBuilder setRecordBookNumber(int recordBookNumber) {
-            if (recordBookNumber <= 0) throw new IllegalArgumentException("Номер зачетки > 0");
-            this.recordBookNumber = recordBookNumber;
-            return this;
-        }
-
-        public Student build() {
-            return new Student(this);
-        }
+        public StudentBuilder setGpa(int gpa) { this.gpa = gpa; return this; }
+        public StudentBuilder setStudentName(String studentName) { this.studentName = studentName; return this; }
+        public StudentBuilder setRecordBookNumber(int recordBookNumber) { this.recordBookNumber = recordBookNumber; return this; }
+        public Student build() { return new Student(this); }
     }
 }

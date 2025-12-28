@@ -1,6 +1,5 @@
 package example.gradle.bigproject.collection;
 
-
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -11,6 +10,10 @@ public class CustomArrayList<T> implements Iterable<T> {
     public CustomArrayList() {
         this.data = new Object[10];
         this.size = 0;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     public void add(T item) {

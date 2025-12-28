@@ -1,68 +1,76 @@
 package example.gradle.bigproject.handlers.strategy;
 
+import example.gradle.bigproject.collection.CustomArrayList;
 import example.gradle.bigproject.model.Student;
 import example.gradle.bigproject.validators.StudentValidator;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class FillFromFileStrategy implements ResponseStrategy {
 
     @Override
     public void handleResponse() {
-        // Указываем твой файл
-        String filePath = "output_students.txt";
-        System.out.println(" Начинаем чтение данных из файла: " + filePath);
+        // Путь к файлу в корне проекта
+        File file = new File("output_students.txt");
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        if (!file.exists()) {
+            System.out.println(" Ошибка: Файл 'output_students.txt' не найден!");
+            return;
+        }
+
+        Student.studentList = new CustomArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             int count = 0;
 
+            System.out.println(" ⏳ Чтение файла...");
+
             while ((line = br.readLine()) != null) {
-                // Пропускаем пустые строки, если они есть
                 if (line.trim().isEmpty()) continue;
 
-                // Разделяем строку по символу "|"
-                // Используем \\|, так как | — это спецсимвол в регулярных выражениях
-                String[] parts = line.split("\\|");
+                try {
 
-                if (parts.length >= 3) {
-                    try {
-                        /* ПАРСИНГ: убираем названия полей, оставляем только суть
-                           parts[0] это "Студент: Имя" -> делим по ":" и берем вторую часть [1]
-                        */
-                        String name = parts[0].split(":")[1].trim();// Берем то, что после "Студент:"
-                        String recordStr = parts[1].split(":")[1].trim();// Берем то, что после "Зачетка:"
-                        String gpaStr = parts[2].split(":")[1].trim();// Берем то, что после "Балл:"
+                    String[] parts = line.split("\\|");
+                    if (parts.length < 3) continue;
 
-                        // Преобразуем строки в числа
-                        int recordNumber = Integer.parseInt(recordStr);
-                        int gpa = Integer.parseInt(gpaStr);
+                    String name = parts[0].replace("Студент:", "").trim();
+                    String recStr = parts[1].replace("Зачетка:", "").trim();
+                    String gpaStr = parts[2].replace("Балл:", "").trim();
 
-                        // Создаем объект через Builder
-                        Student student = new Student.StudentBuilder()
-                                .setStudentName(name)
-                                .setRecordBookNumber(recordNumber)
-                                .setGpa(gpa)
-                                .build();
+                    int recordNumber = Integer.parseInt(recStr);
+                    int gpa = Integer.parseInt(gpaStr);
 
-                        // ВАЛИДАЦИЯ
-                        if (StudentValidator.validate(student)) {
-                            Student.studentList.add(student);
-                            count++;
-                        } else {
-                            System.out.println(" Студент не прошел валидацию: " + name);
-                        }
+                    Student student = Student.builder()
+                            .setStudentName(name)
+                            .setGpa(gpa)
+                            .setRecordBookNumber(recordNumber)
+                            .build();
 
-                    } catch (Exception e) {
-                        System.out.println(" Не удалось обработать строку: " + line);
+                    // Валидация и добавление
+                    if (StudentValidator.validate(student)) {
+                        Student.studentList.add(student);
+                        count++;
                     }
+                } catch (Exception e) {
+
                 }
             }
-            System.out.println(" Загрузка успешно завершена! Добавлено студентов: " + count);
+
+            System.out.println(" Загрузка завершена! Найдено студентов: " + count);
+            System.out.println(" -------------------------------------------");
+
+            // --- БЛОК ВЫВОДА СПИСКА НА ЭКРАН ---
+            if (Student.studentList.size() == 0) {
+                System.out.println(" Список пуст (возможно, студенты не прошли валидацию).");
+            } else {
+                for (int i = 0; i < Student.studentList.size(); i++) {
+                    System.out.println((i + 1) + ". " + Student.studentList.get(i));
+                }
+            }
+            System.out.println(" -------------------------------------------");
 
         } catch (IOException e) {
-            System.out.println(" Ошибка: Файл '" + filePath + "' не найден.");
+            System.out.println(" Ошибка при чтении файла: " + e.getMessage());
         }
     }
 }
