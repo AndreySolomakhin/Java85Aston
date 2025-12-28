@@ -1,6 +1,6 @@
 package example.gradle.bigproject.handlers;
 
-import example.gradle.bigproject.handlers.strategy.FillFromFileStrategy;
+import example.gradle.bigproject.handlers.strategy.fill.FillFromFileStrategy;
 
 public class FillFromFile extends Handler{
     public FillFromFile() {

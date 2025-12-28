@@ -3,3 +3,8 @@
 Студент: Анна            | Зачетка: 92191 | Балл: 49
 Студент: Елена           | Зачетка: 51780 | Балл: 55
 Студент: Мария           | Зачетка: 38474 | Балл: 61
+example.gradle.bigproject.model.Student@c5478e12
+example.gradle.bigproject.model.Student@31bad250
+example.gradle.bigproject.model.Student@396e5337
+example.gradle.bigproject.model.Student@c54743ae
+example.gradle.bigproject.model.Student@c54663c3

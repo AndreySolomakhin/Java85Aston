@@ -1,12 +1,14 @@
-package example.gradle.bigproject.handlers.strategy;
+package example.gradle.bigproject.handlers.strategy.output;
 
+import example.gradle.bigproject.handlers.strategy.ResponseStrategy;
 import example.gradle.bigproject.model.Student;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class OutputAllStudentsFileStrategy implements ResponseStrategy{
+public class OutputAllStudentsFileStrategy implements ResponseStrategy {
     @Override
     public void handleResponse() {
         unloadingToFile();
@@ -17,8 +19,9 @@ public class OutputAllStudentsFileStrategy implements ResponseStrategy{
             JOptionPane.showMessageDialog(null, "Нечего сохранять. Список пуст.");
             return;
         }
-
-        try (FileWriter writer = new FileWriter("output_students.txt", true)) { //В режиме добавления
+        File file = new File("src/main/resources/output_students.txt");
+        file.delete();
+        try (FileWriter writer = new FileWriter(file, true)) { //В режиме добавления
             for (Student s : Student.studentList) {
                 writer.write(s.toString() + "\n");
             }

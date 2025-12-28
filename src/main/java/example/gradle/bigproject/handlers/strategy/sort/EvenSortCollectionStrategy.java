@@ -1,12 +1,13 @@
-package example.gradle.bigproject.handlers.strategy;
+package example.gradle.bigproject.handlers.strategy.sort;
 
+import example.gradle.bigproject.handlers.strategy.ResponseStrategy;
 import example.gradle.bigproject.model.Student;
 import example.gradle.bigproject.sorting.EvenRecordBookSorter;
 import example.gradle.bigproject.sorting.StudentSorter;
 
 import javax.swing.*;
 
-public class EvenSortCollectionStrategy implements ResponseStrategy{
+public class EvenSortCollectionStrategy implements ResponseStrategy {
     @Override
     public void handleResponse() {
         sortCollection();

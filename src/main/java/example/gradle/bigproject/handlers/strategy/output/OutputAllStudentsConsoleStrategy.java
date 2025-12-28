@@ -1,10 +1,11 @@
-package example.gradle.bigproject.handlers.strategy;
+package example.gradle.bigproject.handlers.strategy.output;
 
+import example.gradle.bigproject.handlers.strategy.ResponseStrategy;
 import example.gradle.bigproject.model.Student;
 
 import javax.swing.*;
 
-public class OutputAllStudentsConsoleStrategy implements ResponseStrategy{
+public class OutputAllStudentsConsoleStrategy implements ResponseStrategy {
     @Override
     public void handleResponse() {
         getAllStudents();

@@ -1,6 +1,7 @@
-package example.gradle.bigproject.handlers.strategy;
+package example.gradle.bigproject.handlers.strategy.fill;
 
 import example.gradle.bigproject.collection.CustomArrayList;
+import example.gradle.bigproject.handlers.strategy.ResponseStrategy;
 import example.gradle.bigproject.model.Student;
 import example.gradle.bigproject.validators.StudentValidator;
 import java.io.*;
@@ -10,7 +11,7 @@ public class FillFromFileStrategy implements ResponseStrategy {
     @Override
     public void handleResponse() {
         // Путь к файлу в корне проекта
-        File file = new File("output_students.txt");
+        File file = new File("src/main/resources/ready_students.txt");
 
         if (!file.exists()) {
             System.out.println(" Ошибка: Файл 'output_students.txt' не найден!");
