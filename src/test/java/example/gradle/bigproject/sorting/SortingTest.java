@@ -65,6 +65,7 @@ class SortingTest {
         // На индексе 2 теперь студент с зачеткой 10
         assertEquals(10, students.get(2).getRecordBookNumber());
     }
+
     @Test
     void testSortByAllFields() {
         Student s1 = Student.builder().setStudentName("Иван").setGpa(4).setRecordBookNumber(102).build();
