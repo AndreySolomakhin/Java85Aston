@@ -1,6 +1,7 @@
 package example.gradle.bigproject.multithreading;
 
 import example.gradle.bigproject.model.Student;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MultithreadedCounter {
@@ -31,17 +32,14 @@ public class MultithreadedCounter {
             final int threadId = i;
 
             threads[i] = new Thread(() -> {
-                int localCount = 0;
                 for (int j = threadStart; j < threadEnd; j++) {
                     String current = Student.studentList.get(j).getStudentName();
                     if (current != null && current.equals(name)) {
-                        localCount++;
+                        totalCount.incrementAndGet();
                     }
                 }
-                synchronized (totalCount) {
-                    totalCount.addAndGet(localCount);
-                    System.out.println("Поток " + threadId + " нашел " + localCount + " вхождений");
-                }
+                System.out.println("Поток " + threadId + " нашел " + totalCount + " вхождений");
+
             });
 
             threads[i].start();
@@ -79,17 +77,13 @@ public class MultithreadedCounter {
             final int threadId = i;
 
             threads[i] = new Thread(() -> {
-                int localCount = 0;
                 for (int j = threadStart; j < threadEnd; j++) {
                     Student student = Student.studentList.get(j);
                     if (student != null && student.getGpa() == targetGPA) {
-                        localCount++;
+                        totalCount.incrementAndGet();
                     }
                 }
-                synchronized (totalCount) {
-                    totalCount.addAndGet(localCount);
-                    System.out.println("Поток " + threadId + " нашел " + localCount + " студентов с GPA=" + targetGPA);
-                }
+                System.out.println("Поток " + threadId + " нашел " + totalCount + " студентов с GPA=" + targetGPA);
             });
 
             threads[i].start();
@@ -131,17 +125,13 @@ public class MultithreadedCounter {
             final int threadId = i;
 
             threads[i] = new Thread(() -> {
-                int localCount = 0;
                 for (int j = threadStart; j < threadEnd; j++) {
                     Student student = Student.studentList.get(j);
                     if (student != null && student.getGpa() >= minGPA) {
-                        localCount++;
+                        totalCount.incrementAndGet();
                     }
                 }
-                synchronized (totalCount) {
-                    totalCount.addAndGet(localCount);
-                    System.out.println("Поток " + threadId + " нашел " + localCount + " студентов с GPA>=" + minGPA);
-                }
+                System.out.println("Поток " + threadId + " нашел " + totalCount + " студентов с GPA>=" + minGPA);
             });
 
             threads[i].start();

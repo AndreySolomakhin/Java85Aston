@@ -1,7 +1,7 @@
 package example.gradle.bigproject.ui;
 
 import example.gradle.bigproject.handlers.*;
-import example.gradle.bigproject.multithreading.MultithreadedCounter;
+import example.gradle.bigproject.handlers.strategy.sort.EvenSortCollectionStrategy;
 
 import javax.swing.*;
 
@@ -26,6 +26,13 @@ public class UserInterface {
             "По имени",
             "По конкретному GPA",
             "По GPA >= установленному"};
+
+    private static final String[] OPTIONS_SORT = {
+            "По имени",
+            "По номеру зачетки",
+            "По GPA",
+            "По всем полям",
+            "Сортировка четных номеров"};
 
     public static boolean isWork = true;
 
@@ -59,15 +66,25 @@ public class UserInterface {
                 null, OPTIONS_MULTITHREAD, null);
     }
 
+    private static int sortVarWindow() {
+
+        return JOptionPane.showOptionDialog(null,
+                "Какой вариант сортировки выберете?",
+                "Варианты сортировки",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null, OPTIONS_SORT, null);
+    }
+
     public static void handleChooseStarWindow(int indexChooseStartWindow) {
         switch (indexChooseStartWindow) {
 
-            case 0 -> handleChooseLoadWindow(loadWindow());                                        //Окно выбора варианта заполнения списка студентов
-            case 1 -> new EvenSortCollection().handleResponse();                                   //Произвести сортировку списка по четным значениям поля (Задание 1)
-            case 2 -> new OutputAllStudentsFile().handleResponse();                                 //Выгрузить список студентов в файл",
-            case 3 -> multithreadOperationsWindow(multithreadWindow());                //Подсчитать количество студентов по среднему баллу",
-            case 4 -> new OutputAllStudentsConsole().handleResponse();        //Показать список всех студентов",
-            case 5 -> new Exit().handleResponse();                                        //Выйти из программы"
+            case 0 -> handleChooseLoadWindow(loadWindow());
+            case 1 -> sortChooseWindow(sortVarWindow());
+            case 2 -> new OutputAllStudentsFile().handleResponse();
+            case 3 -> multithreadOperationsWindow(multithreadWindow());
+            case 4 -> new OutputAllStudentsConsole().handleResponse();
+            case 5 -> new Exit().handleResponse();
         }
     }
 
@@ -87,6 +104,17 @@ public class UserInterface {
             case 0 -> new MtrSearchByName().handleResponse();
             case 1 -> new MtrSearchByGpaFix().handleResponse();
             case 2 -> new MtrSearchByGpaAsc().handleResponse();
+        }
+    }
+
+    private static void sortChooseWindow(int indexChooseOperation) {
+
+        switch (indexChooseOperation) {
+            case 0 -> new SortName().handleResponse();
+            case 1 -> new SortRec().handleResponse();
+            case 2 -> new SortGpa().handleResponse();
+            case 3 -> new SortAllField().handleResponse();
+            case 4 -> new EvenSortCollectionStrategy().handleResponse();
         }
     }
 }

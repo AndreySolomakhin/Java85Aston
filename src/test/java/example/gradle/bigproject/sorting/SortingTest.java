@@ -65,4 +65,20 @@ class SortingTest {
         // На индексе 2 теперь студент с зачеткой 10
         assertEquals(10, students.get(2).getRecordBookNumber());
     }
+    @Test
+    void testSortByAllFields() {
+        Student s1 = Student.builder().setStudentName("Иван").setGpa(4).setRecordBookNumber(102).build();
+        Student s2 = Student.builder().setStudentName("Иван").setGpa(4).setRecordBookNumber(101).build();
+        // У них одинаковые имена и баллы, но у s2 номер зачетки меньше
+
+        CustomArrayList<Student> list = new CustomArrayList<>();
+        list.add(s1);
+        list.add(s2);
+
+        BubbleSortStrategy<Student> sorter = new BubbleSortStrategy<>();
+        sorter.sort(list, Student.BY_ALL_FIELDS);
+
+        // После сортировки s2 должен быть первым, так как 101 < 102
+        assertEquals(101, list.get(0).getRecordBookNumber());
+    }
 }

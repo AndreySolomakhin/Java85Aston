@@ -1,10 +1,11 @@
-package example.gradle.bigproject.handlers.strategy;
+package example.gradle.bigproject.handlers.strategy.multithread;
 
+import example.gradle.bigproject.handlers.strategy.ResponseStrategy;
 import example.gradle.bigproject.multithreading.MultithreadedCounter;
 
 import javax.swing.*;
 
-public class MtrSearchByGpaFixStrategy implements ResponseStrategy{
+public class MtrSearchByGpaFixStrategy implements ResponseStrategy {
     @Override
     public void handleResponse() {
         try {

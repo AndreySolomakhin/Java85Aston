@@ -1,10 +1,11 @@
-package example.gradle.bigproject.handlers.strategy;
+package example.gradle.bigproject.handlers.strategy.multithread;
 
+import example.gradle.bigproject.handlers.strategy.ResponseStrategy;
 import example.gradle.bigproject.multithreading.MultithreadedCounter;
 
 import javax.swing.*;
 
-public class MtrSearchByNameStrategy implements ResponseStrategy{
+public class MtrSearchByNameStrategy implements ResponseStrategy {
     @Override
     public void handleResponse() {
         searchByName(JOptionPane.showInputDialog("Введите имя:"));

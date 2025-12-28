@@ -1,6 +1,6 @@
 package example.gradle.bigproject.handlers;
 
-import example.gradle.bigproject.handlers.strategy.EvenSortCollectionStrategy;
+import example.gradle.bigproject.handlers.strategy.sort.EvenSortCollectionStrategy;
 
 public class EvenSortCollection extends Handler {
     public EvenSortCollection() {

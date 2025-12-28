@@ -1,6 +1,6 @@
 package example.gradle.bigproject.handlers;
 
-import example.gradle.bigproject.handlers.strategy.FillRandomStrategy;
+import example.gradle.bigproject.handlers.strategy.fill.FillRandomStrategy;
 
 public class FillRandom extends Handler{
     public FillRandom() {

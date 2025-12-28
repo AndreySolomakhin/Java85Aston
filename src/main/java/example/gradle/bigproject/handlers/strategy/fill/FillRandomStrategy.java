@@ -1,5 +1,6 @@
-package example.gradle.bigproject.handlers.strategy;
+package example.gradle.bigproject.handlers.strategy.fill;
 
+import example.gradle.bigproject.handlers.strategy.ResponseStrategy;
 import example.gradle.bigproject.model.Student;
 import example.gradle.bigproject.validators.StudentValidator;
 import java.util.Random;
@@ -18,7 +19,7 @@ public class FillRandomStrategy implements ResponseStrategy {
                         .setRecordBookNumber(10000 + rnd.nextInt(90000))
                         .build())
                 .filter(StudentValidator::validate)
-                .limit(5)
+                .limit(10000)
                 .forEach(s -> {
                     Student.studentList.add(s);
                     System.out.println(" Добавлен: " + s);
