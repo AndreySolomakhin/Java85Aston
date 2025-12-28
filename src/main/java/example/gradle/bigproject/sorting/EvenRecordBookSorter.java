@@ -21,7 +21,7 @@ public class EvenRecordBookSorter implements StudentSorter {
             }
         }
 
-        // 2. Сортируем чётные
+        // 2. Сортируем чётные (bubble sort)
         if (!evenStudents.isEmpty()) {
             quickSortByRecordBook(evenStudents, 0, evenStudents.size() - 1);
         }
