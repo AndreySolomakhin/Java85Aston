@@ -32,13 +32,15 @@ public class MultithreadedCounter {
             final int threadId = i;
 
             threads[i] = new Thread(() -> {
+                int localCount = 0;
                 for (int j = threadStart; j < threadEnd; j++) {
                     String current = Student.studentList.get(j).getStudentName();
                     if (current != null && current.equals(name)) {
                         totalCount.incrementAndGet();
+                        localCount++;
                     }
                 }
-                System.out.println("Поток " + threadId + " нашел " + totalCount + " вхождений");
+                System.out.println("Поток " + threadId + " нашел " + localCount + " вхождений");
 
             });
 
@@ -77,13 +79,15 @@ public class MultithreadedCounter {
             final int threadId = i;
 
             threads[i] = new Thread(() -> {
+                int localCount = 0;
                 for (int j = threadStart; j < threadEnd; j++) {
                     Student student = Student.studentList.get(j);
                     if (student != null && student.getGpa() == targetGPA) {
                         totalCount.incrementAndGet();
+                        localCount++;
                     }
                 }
-                System.out.println("Поток " + threadId + " нашел " + totalCount + " студентов с GPA=" + targetGPA);
+                System.out.println("Поток " + threadId + " нашел " + localCount + " студентов с GPA=" + targetGPA);
             });
 
             threads[i].start();
@@ -125,13 +129,15 @@ public class MultithreadedCounter {
             final int threadId = i;
 
             threads[i] = new Thread(() -> {
+                int localCount = 0;
                 for (int j = threadStart; j < threadEnd; j++) {
                     Student student = Student.studentList.get(j);
                     if (student != null && student.getGpa() >= minGPA) {
                         totalCount.incrementAndGet();
+                        localCount++;
                     }
                 }
-                System.out.println("Поток " + threadId + " нашел " + totalCount + " студентов с GPA>=" + minGPA);
+                System.out.println("Поток " + threadId + " нашел " + localCount + " студентов с GPA>=" + minGPA);
             });
 
             threads[i].start();
